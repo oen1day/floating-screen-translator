@@ -10,6 +10,8 @@
 - Added exact OCR duplicate-line merging.
 - Added configurable model download, size, and SHA-256 verification.
 - Improved HyperOS accessibility overlay recovery and target-window capture.
+- Split the public documentation into an English landing page and a complete
+  Simplified Chinese README.
 
 ## Earlier internal builds
 

@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="浮屏译"
+                android:text="@string/overlay_title"
                 android:textColor="@color/paper"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -39,7 +39,7 @@
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/chip_bg"
                 android:maxLines="1"
-                android:text="准备中"
+                android:text="@string/preparing"
                 android:textColor="@color/aqua"
                 android:textSize="11sp" />
 
@@ -52,7 +52,7 @@
                 android:id="@+id/close_button"
                 android:layout_width="34dp"
                 android:layout_height="32dp"
-                android:contentDescription="停止服务"
+                android:contentDescription="@string/stop_service_desc"
                 android:gravity="center"
                 android:text="×"
                 android:textColor="@color/paper_muted"
@@ -111,7 +111,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="强度"
+                    android:text="@string/strength"
                     android:textColor="@color/paper"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -133,7 +133,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="翻译"
+                    android:text="@string/translate"
                     android:textColor="@color/paper"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="全屏"
+                    android:text="@string/full_screen"
                     android:textColor="@color/paper_muted"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -166,7 +166,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="透明度"
+                    android:text="@string/opacity"
                     android:textColor="@color/paper_muted"
                     android:textSize="11sp" />
 
@@ -200,13 +200,13 @@
                 <Button
                     android:id="@+id/full_screen_button"
                     style="@style/OverlayButton"
-                    android:text="全屏" />
+                    android:text="@string/full_screen" />
 
                 <Button
                     android:id="@+id/region_button"
                     style="@style/OverlayButton"
                     android:layout_marginLeft="7dp"
-                    android:text="框选区域" />
+                    android:text="@string/select_region" />
             </LinearLayout>
         </LinearLayout>
 
@@ -229,7 +229,7 @@
                     android:id="@+id/result_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="打开翻译后，译文会显示在这里。\n拖动画布可移动窗口，右下角可缩放。"
+                    android:text="@string/overlay_placeholder"
                     android:textColor="@color/paper"
                     android:textIsSelectable="true"
                     android:textSize="15sp"
@@ -247,7 +247,7 @@
         android:layout_marginTop="3dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/chip_bg"
-        android:contentDescription="收起控制面板"
+        android:contentDescription="@string/collapse_panel"
         android:elevation="8dp"
         android:padding="6dp"
         android:scaleType="centerInside"
@@ -261,7 +261,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/chip_bg"
-        android:contentDescription="拖动调整窗口大小"
+        android:contentDescription="@string/resize_panel"
         android:elevation="9dp"
         android:gravity="center"
         android:text="◢"

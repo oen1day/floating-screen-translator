@@ -1,0 +1,14 @@
+{
+  "project": "Floating Screen Translator",
+  "human_author": "oen1day",
+  "ai_collaborator": "OpenAI Codex (GPT-5)",
+  "license": "MIT",
+  "motto": {
+    "zh-CN": "人人为我，我为人人",
+    "zh-TW": "人人為我，我為人人",
+    "en": "All for one, one for all",
+    "ru": "Один за всех, все за одного"
+  },
+  "sakura_model": "SakuraLLM/Sakura-7B-Qwen2.5-v1.0-GGUF",
+  "sakura_license": "CC-BY-NC-SA-4.0"
+}

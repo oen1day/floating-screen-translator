@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="浮屏译"
+            android:text="@string/app_name"
             android:textColor="@color/paper"
             android:textSize="34sp"
             android:textStyle="bold" />
@@ -35,10 +35,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="捕获屏幕文字，在可拖动、可缩放的悬浮窗里持续翻译。"
+            android:text="@string/tagline"
             android:textColor="@color/paper_muted"
             android:textSize="14sp"
             android:lineSpacingExtra="3dp" />
+
+        <Button
+            android:id="@+id/interface_language_button"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/button_secondary"
+            android:text="@string/interface_language"
+            android:textAllCaps="false"
+            android:textColor="@color/paper"
+            android:textSize="13sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,7 +62,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="运行状态"
+                android:text="@string/run_status"
                 android:textColor="@color/paper"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -61,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="正在检查权限…"
+                android:text="@string/status_checking"
                 android:textColor="@color/paper_muted"
                 android:textSize="13sp" />
 
@@ -70,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="悬浮窗权限：检查中"
+                android:text="@string/overlay_permission_checking"
                 android:textColor="@color/warning"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -79,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            android:text="首次使用"
+            android:text="@string/first_use"
             android:textColor="@color/paper"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -88,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
-            android:text="1. 授予悬浮窗和通知权限\n2. 点击下方按钮并允许屏幕捕获\n3. 在悬浮面板打开“翻译”\n4. 默认翻译全屏；需要时点击“框选区域”"
+            android:text="@string/first_use_steps"
             android:textColor="@color/paper_muted"
             android:textSize="14sp"
             android:lineSpacingExtra="7dp" />
@@ -99,7 +110,7 @@
             android:layout_height="54dp"
             android:layout_marginTop="26dp"
             android:background="@drawable/button_primary"
-            android:text="授权并启动悬浮翻译"
+            android:text="@string/start_button"
             android:textAllCaps="false"
             android:textColor="@color/ink_950"
             android:textSize="15sp"
@@ -110,7 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:text="HyperOS 兼容模式：正在检查无障碍状态…"
+            android:text="@string/accessibility_checking"
             android:textColor="@color/paper_muted"
             android:textSize="12sp"
             android:lineSpacingExtra="3dp" />
@@ -121,7 +132,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/button_secondary"
-            android:text="使用无障碍兼容模式"
+            android:text="@string/use_accessibility"
             android:textAllCaps="false"
             android:textColor="@color/paper"
             android:textSize="14sp" />
@@ -131,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="本地精修模型：检查中…"
+            android:text="@string/local_model_checking"
             android:textColor="@color/aqua"
             android:textSize="12sp"
             android:lineSpacingExtra="3dp" />
@@ -142,7 +153,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/button_secondary"
-            android:text="下载本地精修模型"
+            android:text="@string/download_local_model"
             android:textAllCaps="false"
             android:textColor="@color/paper"
             android:textSize="13sp" />
@@ -152,7 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="3B 精细模型：检查中，模型与缓存合计约 3.5GB…"
+            android:text="@string/large_model_checking"
             android:textColor="@color/aqua"
             android:textSize="12sp"
             android:lineSpacingExtra="3dp" />
@@ -163,7 +174,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/button_secondary"
-            android:text="下载 3B 精细模型"
+            android:text="@string/download_large_model"
             android:textAllCaps="false"
             android:textColor="@color/paper"
             android:textSize="13sp" />
@@ -173,7 +184,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="日→中专项模型：检查中…"
+            android:text="@string/ultra_model_checking"
             android:textColor="@color/aqua"
             android:textSize="12sp"
             android:lineSpacingExtra="3dp" />
@@ -184,7 +195,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/button_secondary"
-            android:text="下载 Sakura 7B 日→中专项模型"
+            android:text="@string/download_ultra_model"
             android:textAllCaps="false"
             android:textColor="@color/paper"
             android:textSize="13sp" />
@@ -194,7 +205,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="API 翻译：未配置"
+            android:text="@string/api_unconfigured"
             android:textColor="@color/aqua"
             android:textSize="12sp"
             android:lineSpacingExtra="3dp" />
@@ -203,7 +214,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="API 服务商"
+            android:text="@string/api_provider"
             android:textColor="@color/paper_muted"
             android:textSize="12sp" />
 
@@ -223,7 +234,7 @@
             android:layout_marginTop="8dp"
             android:autofillHints=""
             android:background="@drawable/card_bg"
-            android:hint="完整的 HTTPS Chat Completions URL"
+            android:hint="@string/api_endpoint_hint"
             android:importantForAutofill="no"
             android:inputType="textUri"
             android:maxLines="1"
@@ -241,7 +252,7 @@
             android:layout_marginTop="8dp"
             android:autofillHints=""
             android:background="@drawable/card_bg"
-            android:hint="模型名称，例如 gpt-4o-mini 或 deepseek-chat"
+            android:hint="@string/api_model_hint"
             android:importantForAutofill="no"
             android:inputType="text"
             android:maxLines="1"
@@ -259,7 +270,7 @@
             android:layout_marginTop="8dp"
             android:autofillHints=""
             android:background="@drawable/card_bg"
-            android:hint="填写 API Key"
+            android:hint="@string/api_key_hint"
             android:importantForAutofill="no"
             android:inputType="textPassword"
             android:maxLines="1"
@@ -275,7 +286,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="我知道选择 API 档时，屏幕识别文字会发送到填写的外部服务，并可能产生费用"
+            android:text="@string/api_consent"
             android:textColor="@color/paper_muted"
             android:textSize="12sp" />
 
@@ -285,7 +296,7 @@
             android:layout_height="46dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/button_secondary"
-            android:text="保存 API 设置"
+            android:text="@string/save_api_settings"
             android:textAllCaps="false"
             android:textColor="@color/paper"
             android:textSize="13sp" />
@@ -295,7 +306,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="ADB 辅助自动恢复：检查中…"
+            android:text="@string/adb_recovery_checking"
             android:textColor="@color/aqua"
             android:textSize="12sp"
             android:lineSpacingExtra="3dp" />
@@ -306,7 +317,7 @@
             android:layout_height="46dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/button_secondary"
-            android:text="ADB 辅助自动恢复"
+            android:text="@string/adb_recovery"
             android:textAllCaps="false"
             android:textColor="@color/paper"
             android:textSize="13sp" />
@@ -317,7 +328,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/button_secondary"
-            android:text="停止悬浮服务"
+            android:text="@string/stop_service"
             android:textAllCaps="false"
             android:textColor="@color/paper"
             android:textSize="14sp" />
@@ -326,8 +337,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            android:text="隐私说明：OCR 与翻译默认在设备上运行。仅首次下载语言模型时需要联网；受保护或禁止录制的画面可能显示为黑屏。"
+            android:text="@string/privacy_note"
             android:textColor="#8FA7AD"
+            android:textSize="12sp"
+            android:lineSpacingExtra="3dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@string/project_credit"
+            android:textColor="@color/aqua"
             android:textSize="12sp"
             android:lineSpacingExtra="3dp" />
     </LinearLayout>

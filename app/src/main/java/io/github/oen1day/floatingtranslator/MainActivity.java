@@ -52,6 +52,7 @@ public class MainActivity extends Activity {
     private Button apiSaveButton;
     private Button vipButton;
     private Button stopButton;
+    private Button interfaceLanguageButton;
     private MediaProjectionManager projectionManager;
     private int pendingStartMode = FloatingTranslateService.INPUT_MODE_MEDIA_PROJECTION;
     private boolean localModelDownloading;
@@ -63,7 +64,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!AppLanguage.isConfigured(this)) {
+            startActivity(new Intent(this, LanguageSetupActivity.class));
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_main);
+        localizeUi();
 
         statusText = findViewById(R.id.status_text);
         permissionText = findViewById(R.id.permission_text);
@@ -86,6 +93,7 @@ public class MainActivity extends Activity {
         apiSaveButton = findViewById(R.id.api_save_button);
         vipButton = findViewById(R.id.vip_button);
         stopButton = findViewById(R.id.stop_button);
+        interfaceLanguageButton = findViewById(R.id.interface_language_button);
         projectionManager =
                 (MediaProjectionManager) getSystemService(MEDIA_PROJECTION_SERVICE);
 
@@ -98,8 +106,13 @@ public class MainActivity extends Activity {
         vipButton.setOnClickListener(v -> toggleVipAutoHeal());
         stopButton.setOnClickListener(v -> {
             stopService(new Intent(this, FloatingTranslateService.class));
-            Toast.makeText(this, "悬浮翻译服务已停止", Toast.LENGTH_SHORT).show();
+            UiText.toast(this, "悬浮翻译服务已停止", Toast.LENGTH_SHORT);
             updateUi();
+        });
+        interfaceLanguageButton.setOnClickListener(v -> {
+            stopService(new Intent(this, FloatingTranslateService.class));
+            startActivity(new Intent(this, LanguageSetupActivity.class)
+                    .putExtra(LanguageSetupActivity.EXTRA_CHANGE_LANGUAGE, true));
         });
         setupCloudApiProviderSpinner();
         loadCloudApiSettingsUi();
@@ -123,7 +136,7 @@ public class MainActivity extends Activity {
 
     private void prepareAndStart() {
         if (FloatingTranslateService.isRunning()) {
-            Toast.makeText(this, "悬浮翻译已经在运行", Toast.LENGTH_SHORT).show();
+            UiText.toast(this, "悬浮翻译已经在运行", Toast.LENGTH_SHORT);
             return;
         }
 
@@ -146,15 +159,15 @@ public class MainActivity extends Activity {
 
     private void prepareAccessibilityStart() {
         if (FloatingTranslateService.isRunning()) {
-            Toast.makeText(this, "悬浮翻译已经在运行", Toast.LENGTH_SHORT).show();
+            UiText.toast(this, "悬浮翻译已经在运行", Toast.LENGTH_SHORT);
             return;
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-            Toast.makeText(
+            UiText.toast(
                     this,
                     "无障碍截图需要 Android 11 或更高版本",
                     Toast.LENGTH_LONG
-            ).show();
+            );
             return;
         }
 
@@ -183,31 +196,31 @@ public class MainActivity extends Activity {
                         700L
                 );
             } else {
-                Toast.makeText(
-                        this,
-                        "自动恢复未完成，请稍后重试或手动打开无障碍",
-                        Toast.LENGTH_LONG
-                ).show();
+            UiText.toast(
+                    this,
+                    "自动恢复未完成，请稍后重试或手动打开无障碍",
+                    Toast.LENGTH_LONG
+            );
                 updateUi();
             }
             return;
         }
 
         if (!enabled) {
-            Toast.makeText(
+            UiText.toast(
                     this,
                     "请先在系统设置中开启“浮屏译无障碍截图”",
                     Toast.LENGTH_LONG
-            ).show();
+            );
             openAccessibilitySettings();
             return;
         }
 
-        Toast.makeText(
-                this,
-                "无障碍已启用，但服务尚未连接；请关闭后重新开启，再返回本页",
-                Toast.LENGTH_LONG
-        ).show();
+            UiText.toast(
+                    this,
+                    "无障碍已启用，但服务尚未连接；请关闭后重新开启，再返回本页",
+                    Toast.LENGTH_LONG
+            );
         openAccessibilitySettings();
         updateUi();
     }
@@ -228,11 +241,11 @@ public class MainActivity extends Activity {
     private void startAccessibilityMode() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R
                 || !ScreenCaptureAccessibilityService.isConnected()) {
-            Toast.makeText(
+            UiText.toast(
                     this,
                     "无障碍截图服务未连接，未启动兼容模式",
                     Toast.LENGTH_LONG
-            ).show();
+            );
             updateUi();
             return;
         }
@@ -242,14 +255,14 @@ public class MainActivity extends Activity {
                         FloatingTranslateService.INPUT_MODE_ACCESSIBILITY
                 );
         startForegroundService(serviceIntent);
-        Toast.makeText(
+        UiText.toast(
                 this,
                 AccessibilityHealer.hasPermission(this)
                         && AccessibilityHealer.isAutoHealEnabled(this)
                         ? "无障碍兼容模式已启动；强制停止后重新打开 App 会自动恢复"
                         : "无障碍兼容模式已启动；强制停止 App 后需重新开启无障碍",
                 Toast.LENGTH_LONG
-        ).show();
+        );
         updateUi();
     }
 
@@ -274,16 +287,17 @@ public class MainActivity extends Activity {
                                             + "\n" + formatBytes(downloaded)
                                             + " / " + formatBytes(total)
                             );
+                            localizeUi();
                         })
                 );
                 runOnUiThread(() -> {
                     localModelDownloading = false;
                     localModelButton.setEnabled(true);
-                    Toast.makeText(
+                    UiText.toast(
                             this,
                             "本地精修模型已下载完成，可离线使用",
                             Toast.LENGTH_LONG
-                    ).show();
+                    );
                     updateUi();
                 });
             } catch (Exception error) {
@@ -293,11 +307,12 @@ public class MainActivity extends Activity {
                     localModelStatus.setText(
                             "本地精修模型：下载失败\n" + error.getMessage()
                     );
-                    Toast.makeText(
+                    localizeUi();
+                    UiText.toast(
                             this,
                             "模型下载失败：" + error.getMessage(),
                             Toast.LENGTH_LONG
-                    ).show();
+                    );
                 });
             }
         }, "local-model-download").start();
@@ -349,28 +364,34 @@ public class MainActivity extends Activity {
                                     long downloadedBytes,
                                     long totalBytes
                             ) {
-                                runOnUiThread(() -> largeModelStatus.setText(
-                                        "3B 精细模型：下载中 " + percent + "%"
-                                                + "\n" + formatBytes(downloadedBytes)
-                                                + " / " + formatBytes(totalBytes)
-                                ));
+                                runOnUiThread(() -> {
+                                    largeModelStatus.setText(
+                                            "3B 精细模型：下载中 " + percent + "%"
+                                                    + "\n" + formatBytes(downloadedBytes)
+                                                    + " / " + formatBytes(totalBytes)
+                                    );
+                                    localizeUi();
+                                });
                             }
 
                             @Override
                             public void onVerifying() {
-                                runOnUiThread(() -> largeModelStatus.setText(
-                                        "3B 精细模型：正在校验 SHA-256，请稍候"
-                                ));
+                                runOnUiThread(() -> {
+                                    largeModelStatus.setText(
+                                            "3B 精细模型：正在校验 SHA-256，请稍候"
+                                    );
+                                    localizeUi();
+                                });
                             }
                         }
                 );
                 runOnUiThread(() -> {
                     largeModelDownloading = false;
-                    Toast.makeText(
+                    UiText.toast(
                             this,
                             "3B 精细模型已就绪，精细档将优先使用",
                             Toast.LENGTH_LONG
-                    ).show();
+                    );
                     updateUi();
                 });
             } catch (Exception error) {
@@ -380,11 +401,12 @@ public class MainActivity extends Activity {
                     largeModelStatus.setText(
                             "3B 精细模型：不可用\n" + error.getMessage()
                     );
-                    Toast.makeText(
+                    localizeUi();
+                    UiText.toast(
                             this,
                             "3B 模型准备失败：" + error.getMessage(),
                             Toast.LENGTH_LONG
-                    ).show();
+                    );
                 });
             }
         }, "large-model-download").start();
@@ -446,28 +468,34 @@ public class MainActivity extends Activity {
                                     long downloadedBytes,
                                     long totalBytes
                             ) {
-                                runOnUiThread(() -> ultraModelStatus.setText(
-                                        "日→中专项模型：下载中 " + percent + "%"
-                                                + "\n" + formatBytes(downloadedBytes)
-                                                + " / " + formatBytes(totalBytes)
-                                ));
+                                runOnUiThread(() -> {
+                                    ultraModelStatus.setText(
+                                            "日→中专项模型：下载中 " + percent + "%"
+                                                    + "\n" + formatBytes(downloadedBytes)
+                                                    + " / " + formatBytes(totalBytes)
+                                    );
+                                    localizeUi();
+                                });
                             }
 
                             @Override
                             public void onVerifying() {
-                                runOnUiThread(() -> ultraModelStatus.setText(
-                                        "日→中专项模型：正在校验 SHA-256，请稍候"
-                                ));
+                                runOnUiThread(() -> {
+                                    ultraModelStatus.setText(
+                                            "日→中专项模型：正在校验 SHA-256，请稍候"
+                                    );
+                                    localizeUi();
+                                });
                             }
                         }
                 );
                 runOnUiThread(() -> {
                     ultraModelDownloading = false;
-                    Toast.makeText(
+                    UiText.toast(
                             this,
                             "Sakura 7B 日→中专项模型已就绪",
                             Toast.LENGTH_LONG
-                    ).show();
+                    );
                     updateUi();
                 });
             } catch (Exception error) {
@@ -477,11 +505,12 @@ public class MainActivity extends Activity {
                     ultraModelStatus.setText(
                             "日→中专项模型：不可用\n" + error.getMessage()
                     );
-                    Toast.makeText(
+                    localizeUi();
+                    UiText.toast(
                             this,
                             "日→中专项模型准备失败：" + error.getMessage(),
                             Toast.LENGTH_LONG
-                    ).show();
+                    );
                 });
             }
         }, "ultra-model-download").start();
@@ -666,7 +695,7 @@ public class MainActivity extends Activity {
             return;
         }
         if (apiKey.trim().isEmpty() && !hasSavedKey) {
-            Toast.makeText(this, "请填写 API Key", Toast.LENGTH_SHORT).show();
+        UiText.toast(this, "请填写 API Key", Toast.LENGTH_SHORT);
             return;
         }
         try {
@@ -681,17 +710,17 @@ public class MainActivity extends Activity {
             apiKeyInput.setText("");
             apiKeyInput.clearFocus();
             updateCloudApiStatus();
-            Toast.makeText(
+            UiText.toast(
                     this,
                     consent ? "API 设置已保存" : "API 联网翻译已关闭",
                     Toast.LENGTH_SHORT
-            ).show();
+            );
         } catch (Exception error) {
-            Toast.makeText(
+            UiText.toast(
                     this,
                     "保存失败：" + error.getMessage(),
                     Toast.LENGTH_LONG
-            ).show();
+            );
         }
     }
 
@@ -699,11 +728,11 @@ public class MainActivity extends Activity {
         if (consent) {
             return true;
         }
-        Toast.makeText(
+        UiText.toast(
                 this,
                 "请先确认屏幕文字会发送到你填写的 API 服务",
                 Toast.LENGTH_LONG
-        ).show();
+        );
         return false;
     }
 
@@ -733,20 +762,20 @@ public class MainActivity extends Activity {
 
     private void toggleVipAutoHeal() {
         if (!AccessibilityHealer.hasPermission(this)) {
-            Toast.makeText(
+            UiText.toast(
                     this,
                     "此功能需要先通过 ADB 授权 WRITE_SECURE_SETTINGS",
                     Toast.LENGTH_LONG
-            ).show();
+            );
             return;
         }
         boolean next = !AccessibilityHealer.isAutoHealEnabled(this);
         AccessibilityHealer.setAutoHealEnabled(this, next);
-        Toast.makeText(
+        UiText.toast(
                 this,
                 next ? "无障碍自动恢复已开启" : "无障碍自动恢复已关闭",
                 Toast.LENGTH_SHORT
-        ).show();
+        );
         if (next) {
             AccessibilityHealer.heal(this, true);
         }
@@ -769,7 +798,7 @@ public class MainActivity extends Activity {
             if (Settings.canDrawOverlays(this)) {
                 prepareAndStart();
             } else {
-                Toast.makeText(this, "需要悬浮窗权限才能显示翻译面板", Toast.LENGTH_LONG).show();
+                UiText.toast(this, "需要悬浮窗权限才能显示翻译面板", Toast.LENGTH_LONG);
             }
             updateUi();
             return;
@@ -785,9 +814,9 @@ public class MainActivity extends Activity {
                         .putExtra(FloatingTranslateService.EXTRA_RESULT_CODE, resultCode)
                         .putExtra(FloatingTranslateService.EXTRA_CAPTURE_DATA, data);
                 startForegroundService(serviceIntent);
-                Toast.makeText(this, "屏幕捕获已授权，正在启动悬浮窗", Toast.LENGTH_SHORT).show();
+                UiText.toast(this, "屏幕捕获已授权，正在启动悬浮窗", Toast.LENGTH_SHORT);
             } else {
-                Toast.makeText(this, "未授权屏幕捕获，无法翻译", Toast.LENGTH_LONG).show();
+                UiText.toast(this, "未授权屏幕捕获，无法翻译", Toast.LENGTH_LONG);
             }
             updateUi();
         }
@@ -821,6 +850,10 @@ public class MainActivity extends Activity {
         updateLocalModelUi();
         updateLargeModelUi();
         updateUltraModelUi();
+        interfaceLanguageButton.setText(getString(
+                R.string.interface_language_current,
+                AppLanguage.nativeLabel(AppLanguage.get(this))
+        ));
 
         permissionText.setText(
                 overlayGranted
@@ -890,6 +923,11 @@ public class MainActivity extends Activity {
             }
             stopButton.setEnabled(false);
         }
+        localizeUi();
+    }
+
+    private void localizeUi() {
+        UiText.localizeTree(findViewById(android.R.id.content));
     }
 
     private boolean isAccessibilityServiceEnabled() {

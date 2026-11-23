@@ -47,7 +47,7 @@ public class StrengthSelectorView extends View {
     private final int accentColor;
     private final int accentDarkColor;
 
-    private String[] labels = TranslationStrength.BASE_LABELS;
+    private String[] labels = new String[0];
     private Listener listener;
     private int selectedIndex;
     private float indicatorPosition;
@@ -79,6 +79,7 @@ public class StrengthSelectorView extends View {
         inactiveTextColor = context.getColor(R.color.paper_muted);
         accentColor = context.getColor(R.color.aqua);
         accentDarkColor = context.getColor(R.color.aqua_dark);
+        labels = TranslationStrength.uiLabels(context);
 
         trackPaint.setColor(context.getColor(R.color.ink_800));
         fillPaint.setStyle(Paint.Style.FILL);
@@ -93,12 +94,12 @@ public class StrengthSelectorView extends View {
         configureTextPaint(inactiveTextPaint);
         setClickable(true);
         setFocusable(true);
-        setContentDescription("翻译强度，当前" + TranslationStrength.label(selectedIndex));
+        updateContentDescription();
     }
 
     public void setLabels(String[] values) {
         labels = values == null || values.length == 0
-                ? TranslationStrength.BASE_LABELS
+                ? TranslationStrength.uiLabels(getContext())
                 : values;
         selectedIndex = Math.min(selectedIndex, labels.length - 1);
         indicatorPosition = selectedIndex;
@@ -112,7 +113,7 @@ public class StrengthSelectorView extends View {
     public void setSelection(int position, boolean animate) {
         int target = Math.max(0, Math.min(labels.length - 1, position));
         selectedIndex = target;
-        setContentDescription("翻译强度，当前" + labels[target]);
+        updateContentDescription();
         if (indicatorAnimator != null) {
             indicatorAnimator.cancel();
         }
@@ -439,6 +440,17 @@ public class StrengthSelectorView extends View {
     private void configureTextPaint(Paint paint) {
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(sp(11f));
+    }
+
+    private void updateContentDescription() {
+        if (labels.length == 0) {
+            return;
+        }
+        int index = Math.max(0, Math.min(labels.length - 1, selectedIndex));
+        setContentDescription(getContext().getString(
+                R.string.strength_accessibility,
+                labels[index]
+        ));
     }
 
     private float dp(float value) {

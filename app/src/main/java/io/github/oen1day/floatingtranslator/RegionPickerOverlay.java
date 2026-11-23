@@ -48,6 +48,7 @@ public class RegionPickerOverlay {
         this.windowManager = windowManager;
         this.listener = listener;
         root = LayoutInflater.from(context).inflate(R.layout.region_picker, null);
+        UiText.localizeTree(root);
         selectionView = root.findViewById(R.id.selection_view);
         introCard = root.findViewById(R.id.intro_card);
         selectingHint = root.findViewById(R.id.selecting_hint);
@@ -71,10 +72,10 @@ public class RegionPickerOverlay {
         selectionView.setSelectionChangedListener(selectionReady -> {
             if (selectionReady) {
                 actionTray.setVisibility(View.VISIBLE);
-                selectingHint.setText("已选择区域；可拖动重选或双指捏合调整");
+                UiText.setText(selectingHint, "已选择区域；可拖动重选或双指捏合调整");
             } else {
                 actionTray.setVisibility(View.GONE);
-                selectingHint.setText("按住屏幕并拖动框选；松开后确认");
+                UiText.setText(selectingHint, "按住屏幕并拖动框选；松开后确认");
             }
         });
 
@@ -90,7 +91,7 @@ public class RegionPickerOverlay {
         reselectButton.setOnClickListener(v -> {
             selectionView.clearSelection();
             actionTray.setVisibility(View.GONE);
-            selectingHint.setText("按住屏幕并拖动框选；松开后确认");
+            UiText.setText(selectingHint, "按住屏幕并拖动框选；松开后确认");
         });
         confirmButton.setOnClickListener(v -> confirmSelection());
 
@@ -133,17 +134,17 @@ public class RegionPickerOverlay {
         if (existingRect != null && !existingRect.isEmpty()) {
             selectionView.setSelection(existingRect);
             actionTray.setVisibility(View.VISIBLE);
-            selectingHint.setText("已带入上次区域；可重选或双指捏合调整");
+            UiText.setText(selectingHint, "已带入上次区域；可重选或双指捏合调整");
         } else {
             actionTray.setVisibility(View.GONE);
-            selectingHint.setText("按住屏幕并拖动框选；松开后确认");
+            UiText.setText(selectingHint, "按住屏幕并拖动框选；松开后确认");
         }
     }
 
     private void confirmSelection() {
         Rect selected = selectionView.getSelection();
         if (selected.width() < dp(12) || selected.height() < dp(12)) {
-            Toast.makeText(context, "选区太小，请重新框选", Toast.LENGTH_SHORT).show();
+            UiText.toast(context, "选区太小，请重新框选", Toast.LENGTH_SHORT);
             return;
         }
         int width = Math.max(1, selectionView.getWidth());

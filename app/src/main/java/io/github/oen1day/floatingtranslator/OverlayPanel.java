@@ -100,6 +100,7 @@ public class OverlayPanel {
         this.listener = listener;
         this.prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         this.root = LayoutInflater.from(context).inflate(R.layout.overlay_panel, null);
+        UiText.localizeTree(root);
 
         statusChip = root.findViewById(R.id.status_chip);
         regionLabel = root.findViewById(R.id.region_label);
@@ -271,6 +272,7 @@ public class OverlayPanel {
     }
 
     public void setStatus(String text) {
+        text = UiText.translate(context, text);
         String current = statusChip.getText() == null
                 ? ""
                 : statusChip.getText().toString();
@@ -309,7 +311,7 @@ public class OverlayPanel {
     }
 
     public void setRegionLabel(String text) {
-        regionLabel.setText(text);
+        regionLabel.setText(UiText.translate(context, text));
     }
 
     public void setTranslationChecked(boolean checked) {
@@ -441,14 +443,15 @@ public class OverlayPanel {
     }
 
     private String[] strengthLabels() {
+        String[] base = TranslationStrength.uiLabels(context);
         if (!ultraDirectionAvailable()) {
-            return TranslationStrength.BASE_LABELS;
+            return base;
         }
         String[] labels = Arrays.copyOf(
-                TranslationStrength.BASE_LABELS,
-                TranslationStrength.BASE_LABELS.length + 1
+                base,
+                base.length + 1
         );
-        labels[labels.length - 1] = TranslationStrength.ULTRA_LABEL;
+        labels[labels.length - 1] = context.getString(R.string.strength_ja_zh);
         return labels;
     }
 
@@ -494,7 +497,9 @@ public class OverlayPanel {
         collapseButton.setImageResource(
                 collapsed ? R.drawable.ic_panel_expand : R.drawable.ic_panel_collapse
         );
-        collapseButton.setContentDescription(collapsed ? "展开控制面板" : "收起控制面板");
+        collapseButton.setContentDescription(context.getString(
+                collapsed ? R.string.expand_panel : R.string.collapse_panel
+        ));
         if (animate) {
             collapseButton.animate().cancel();
             collapseButton.setScaleX(0.84f);
@@ -572,7 +577,9 @@ public class OverlayPanel {
         int handleSize = dp(60);
         int inset = dp(8);
         collapsedTouchHandle = new View(context);
-        collapsedTouchHandle.setContentDescription("展开控制面板");
+        collapsedTouchHandle.setContentDescription(
+                context.getString(R.string.expand_panel)
+        );
         collapsedTouchHandle.setOnClickListener(v -> setCollapsed(false, true));
         collapsedTouchParams = new WindowManager.LayoutParams(
                 handleSize,
@@ -896,14 +903,20 @@ public class OverlayPanel {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView view = optionView(convertView, parent, false);
-            view.setText(getItem(position).label);
+            view.setText(LanguageCatalog.displayName(
+                    context,
+                    getItem(position).code
+            ));
             return view;
         }
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
             TextView view = optionView(convertView, parent, true);
-            view.setText(getItem(position).label);
+            view.setText(LanguageCatalog.displayName(
+                    context,
+                    getItem(position).code
+            ));
             return view;
         }
 

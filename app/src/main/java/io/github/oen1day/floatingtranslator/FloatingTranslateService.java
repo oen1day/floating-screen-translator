@@ -469,13 +469,13 @@ public class FloatingTranslateService extends Service {
         }
 
         if (resultCode == 0 || captureData == null) {
-            Toast.makeText(this, "缺少屏幕捕获授权，服务未启动", Toast.LENGTH_LONG).show();
+            UiText.toast(this, "缺少屏幕捕获授权，服务未启动", Toast.LENGTH_LONG);
             stopSelf();
             return START_NOT_STICKY;
         }
 
         if (!android.provider.Settings.canDrawOverlays(this)) {
-            Toast.makeText(this, "没有悬浮窗权限，服务未启动", Toast.LENGTH_LONG).show();
+            UiText.toast(this, "没有悬浮窗权限，服务未启动", Toast.LENGTH_LONG);
             stopSelf();
             return START_NOT_STICKY;
         }
@@ -495,11 +495,11 @@ public class FloatingTranslateService extends Service {
             createPanel();
             createCapture();
         } catch (Exception error) {
-            Toast.makeText(
+            UiText.toast(
                     this,
                     "启动屏幕捕获失败：" + safeMessage(error),
                     Toast.LENGTH_LONG
-            ).show();
+            );
             stopSelf();
         }
         return START_NOT_STICKY;
@@ -556,40 +556,40 @@ public class FloatingTranslateService extends Service {
         lastSourceText = "";
         lastCaptureAt = 0L;
         suppressOcrUntil = System.currentTimeMillis() + 650L;
-        Toast.makeText(
+        UiText.toast(
                 this,
                 "旋转后已自动切换到无障碍兼容模式",
                 Toast.LENGTH_SHORT
-        ).show();
+        );
         startAccessibilityPanel(0);
     }
 
     private boolean prepareAccessibilityMode() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-            Toast.makeText(
+            UiText.toast(
                     this,
                     "无障碍截图需要 Android 11 或更高版本",
                     Toast.LENGTH_LONG
-            ).show();
+            );
             return false;
         }
         accessibilityCaptureService = ScreenCaptureAccessibilityService.getInstance();
         if (accessibilityCaptureService == null) {
-            Toast.makeText(
+            UiText.toast(
                     this,
                     "无障碍截图服务未连接，兼容模式未启动",
                     Toast.LENGTH_LONG
-            ).show();
+            );
             return false;
         }
         WindowManager accessibilityWindowManager =
                 accessibilityCaptureService.getOverlayWindowManager();
         if (accessibilityWindowManager == null) {
-            Toast.makeText(
+            UiText.toast(
                     this,
                     "无法取得无障碍悬浮窗管理器",
                     Toast.LENGTH_LONG
-            ).show();
+            );
             return false;
         }
         windowManager = accessibilityWindowManager;
@@ -976,7 +976,10 @@ public class FloatingTranslateService extends Service {
         pendingLocalSourceLanguage = null;
         pendingLocalTargetLanguage = null;
 
-        panel.setStatus("强度：" + TranslationStrength.label(translationStrength));
+        panel.setStatus(getString(
+                R.string.strength_current,
+                TranslationStrength.uiLabel(this, translationStrength)
+        ));
         if (!translationEnabled || lastSourceText.isEmpty()) {
             return;
         }
@@ -1271,11 +1274,11 @@ public class FloatingTranslateService extends Service {
                     Log.w(TAG, "OCR edge risk: selected region touches screen edge");
                     if (!ocrEdgeWarningActive) {
                         ocrEdgeWarningActive = true;
-                        mainHandler.post(() -> Toast.makeText(
+                        mainHandler.post(() -> UiText.toast(
                                 FloatingTranslateService.this,
                                 "选区贴近屏幕边缘，文字可能被裁切",
                                 Toast.LENGTH_SHORT
-                        ).show());
+                        ));
                     }
                 } else {
                     ocrEdgeWarningActive = false;
@@ -1347,7 +1350,12 @@ public class FloatingTranslateService extends Service {
                         showStatusOnMain(unchanged ? "源语言与目标相同" : "运行中");
                     }
                     translationReadyForCurrentDirection = true;
-                    panel.setResult(translatedText.isEmpty() ? "未识别到可翻译文字" : translatedText);
+                    panel.setResult(translatedText.isEmpty()
+                            ? UiText.translate(
+                            FloatingTranslateService.this,
+                            "未识别到可翻译文字"
+                    )
+                            : translatedText);
                     lastDraftSourceText = sourceText;
                     lastDraftTranslation = translatedText;
                     if (!unchanged && requestedStrength >= TranslationStrength.BALANCED) {
@@ -1370,8 +1378,11 @@ public class FloatingTranslateService extends Service {
                 if (generation == translationGeneration) {
                     translationReadyForCurrentDirection = false;
                     showStatusOnMain("翻译模型不可用");
-                    panel.setResult("翻译失败：" + safeMessage(error)
-                            + "\n首次使用请联网下载语言模型。");
+                    panel.setResult(UiText.translate(
+                            FloatingTranslateService.this,
+                            "翻译失败：" + safeMessage(error)
+                                    + "\n首次使用请联网下载语言模型。"
+                    ));
                 }
                 finishTranslation(sourceText);
             }
@@ -1381,9 +1392,12 @@ public class FloatingTranslateService extends Service {
             translationInFlight = false;
             pendingText = null;
             showStatusOnMain("翻译引擎启动失败");
-            panel.setResult("切换语言后无法启动翻译模型："
-                    + safeMessage(error)
-                    + "\n可切回其他语言或重启悬浮服务。");
+            panel.setResult(UiText.translate(
+                    this,
+                    "切换语言后无法启动翻译模型："
+                            + safeMessage(error)
+                            + "\n可切回其他语言或重启悬浮服务。"
+            ));
         }
     }
 
@@ -1464,8 +1478,8 @@ public class FloatingTranslateService extends Service {
     private void startCloudRefinement(LocalRefinementRequest request) {
         cloudApiEngine.translate(
                 this,
-                LanguageCatalog.sourceLabel(request.sourceLanguage),
-                LanguageCatalog.targetLabel(request.targetLanguageCode),
+                LanguageCatalog.displayName(this, request.sourceLanguage),
+                LanguageCatalog.displayName(this, request.targetLanguageCode),
                 request.sourceText,
                 request.contextText,
                 request.draftTranslation,
@@ -1528,8 +1542,8 @@ public class FloatingTranslateService extends Service {
                 }
                 ultraLlmEngine.translate(
                         this,
-                        LanguageCatalog.sourceLabel(request.sourceLanguage),
-                        LanguageCatalog.targetLabel(request.targetLanguageCode),
+                        LanguageCatalog.displayName(this, request.sourceLanguage),
+                        LanguageCatalog.displayName(this, request.targetLanguageCode),
                         request.sourceText,
                         request.contextText,
                         request.draftTranslation,
@@ -1575,8 +1589,8 @@ public class FloatingTranslateService extends Service {
     private void startLargeRefinement(LocalRefinementRequest request) {
         largeLlmEngine.translate(
                 this,
-                LanguageCatalog.sourceLabel(request.sourceLanguage),
-                LanguageCatalog.targetLabel(request.targetLanguageCode),
+                LanguageCatalog.displayName(this, request.sourceLanguage),
+                LanguageCatalog.displayName(this, request.targetLanguageCode),
                 request.sourceText,
                 request.contextText,
                 request.draftTranslation,
@@ -1617,8 +1631,8 @@ public class FloatingTranslateService extends Service {
     private void startSmallRefinement(LocalRefinementRequest request) {
         localLlmEngine.translate(
                 this,
-                LanguageCatalog.sourceLabel(request.sourceLanguage),
-                LanguageCatalog.targetLabel(request.targetLanguageCode),
+                LanguageCatalog.displayName(this, request.sourceLanguage),
+                LanguageCatalog.displayName(this, request.targetLanguageCode),
                 request.sourceText,
                 request.contextText,
                 request.draftTranslation,
@@ -1773,11 +1787,11 @@ public class FloatingTranslateService extends Service {
                 panel.setStatus("框选模式加载失败");
             }
             updateRegionOutline();
-            Toast.makeText(
+            UiText.toast(
                     this,
                     "无法打开框选模式：" + safeMessage(error),
                     Toast.LENGTH_LONG
-            ).show();
+            );
         }
     }
 
@@ -1806,11 +1820,11 @@ public class FloatingTranslateService extends Service {
                         250L
                 );
             } else {
-                Toast.makeText(
+                UiText.toast(
                         this,
                         "恢复悬浮面板失败：" + safeMessage(error),
                         Toast.LENGTH_LONG
-                ).show();
+                );
             }
         }
     }
@@ -1913,9 +1927,9 @@ public class FloatingTranslateService extends Service {
     }
 
     private String directionLabel() {
-        return LanguageCatalog.sourceLabel(sourceMode)
+        return LanguageCatalog.displayName(this, sourceMode)
                 + " → "
-                + LanguageCatalog.targetLabel(targetLanguage);
+                + LanguageCatalog.displayName(this, targetLanguage);
     }
 
     private boolean isCaptureSourceReady() {

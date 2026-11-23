@@ -14,10 +14,12 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
+        android:name=".FloatingTranslatorApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.ScreenTranslator">
 
@@ -29,6 +31,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".LanguageSetupActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ScreenTranslator" />
 
         <service
             android:name=".FloatingTranslateService"
@@ -56,5 +63,9 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_capture_config" />
         </service>
+
+        <meta-data
+            android:name="io.github.oen1day.floatingtranslator.PROJECT_CREDITS"
+            android:value="Created by oen1day with OpenAI Codex (GPT-5); free and open source; All for one, one for all." />
     </application>
 </manifest>

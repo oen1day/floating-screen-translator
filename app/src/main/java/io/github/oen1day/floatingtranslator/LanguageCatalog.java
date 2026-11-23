@@ -1,6 +1,10 @@
 package io.github.oen1day.floatingtranslator;
 
+import android.content.Context;
+
 import com.google.mlkit.nl.translate.TranslateLanguage;
+
+import java.util.Locale;
 
 public final class LanguageCatalog {
     public static final String AUTO = "auto";
@@ -156,5 +160,18 @@ public final class LanguageCatalog {
             }
         }
         return "中文";
+    }
+
+    public static String displayName(Context context, String languageCode) {
+        String normalized = languageCode == null ? AUTO : languageCode;
+        if (AUTO.equals(normalized)) {
+            return context.getString(R.string.language_auto);
+        }
+        String tag = TranslateLanguage.CHINESE.equals(normalized)
+                ? "zh-CN"
+                : normalized;
+        Locale displayLocale = Locale.forLanguageTag(AppLanguage.get(context));
+        String name = Locale.forLanguageTag(tag).getDisplayName(displayLocale);
+        return name == null || name.isEmpty() ? normalized : name;
     }
 }

@@ -17,6 +17,25 @@ maintenance.
 Do not commit `local.properties`, absolute SDK/NDK paths, signing material,
 model files, or generated APKs.
 
+## Interface languages
+
+- Supported UI languages: `zh-CN`, `zh-TW`, `en`, and `ru`.
+- First launch is blocked by `LanguageSetupActivity` until a language is chosen.
+- The home screen exposes a language-change button.
+- Static labels live in `res/values*/strings.xml`.
+- Dynamic status strings use `assets/ui_text.json`.
+- The selected locale never changes the OCR/translation language catalog.
+- Translation output must not be passed through the UI localization translator.
+
+## Attribution
+
+- Visible application attribution is in `@string/project_credit`.
+- Human author: `oen1day`.
+- AI collaborator: `OpenAI Codex (GPT-5)`.
+- Hidden/package-readable attribution is in
+  `res/raw/credits.json` and application `<meta-data>`.
+- Keep `CREDITS.md`, README attribution, and the visible app line in sync.
+
 ## OCR invariants
 
 - Crop strictly to the selected rectangle.

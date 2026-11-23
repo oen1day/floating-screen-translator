@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="框选翻译区域"
+            android:text="@string/region_picker_title"
             android:textColor="@color/paper"
             android:textSize="21sp"
             android:textStyle="bold" />
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:lineSpacingExtra="5dp"
-            android:text="1. 点击“开始框选”。\n2. 按住屏幕并拖动，画出矩形区域。\n3. 松开后可用双指捏合调整选区。\n4. 最后点击“确定”保存。"
+            android:text="@string/region_instructions"
             android:textColor="@color/paper_muted"
             android:textSize="14sp" />
 
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="选区以外的画面会变暗；悬浮翻译面板会暂时隐藏，这是正常状态。"
+            android:text="@string/region_dim_note"
             android:textColor="@color/aqua"
             android:textSize="12sp" />
 
@@ -55,7 +55,7 @@
                 android:id="@+id/cancel_region_button"
                 style="@style/OverlayButton"
                 android:layout_height="48dp"
-                android:text="取消" />
+                android:text="@string/cancel" />
 
             <Button
                 android:id="@+id/start_region_button"
@@ -63,7 +63,7 @@
                 android:layout_height="48dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/button_primary"
-                android:text="开始框选"
+                android:text="@string/start_region"
                 android:textColor="@color/ink_950"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -77,7 +77,7 @@
         android:layout_marginTop="22dp"
         android:background="@drawable/panel_bg"
         android:padding="12dp"
-        android:text="按住屏幕并拖动框选；松开后确认"
+        android:text="@string/region_drag_hint"
         android:textColor="@color/paper"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -98,14 +98,14 @@
             android:id="@+id/reselect_region_button"
             style="@style/OverlayButton"
             android:layout_height="46dp"
-            android:text="重选" />
+            android:text="@string/reselect" />
 
         <Button
             android:id="@+id/cancel_region_action_button"
             style="@style/OverlayButton"
             android:layout_height="46dp"
             android:layout_marginLeft="7dp"
-            android:text="取消" />
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/confirm_region_button"
@@ -113,7 +113,7 @@
             android:layout_height="46dp"
             android:layout_marginLeft="7dp"
             android:background="@drawable/button_primary"
-            android:text="确定"
+            android:text="@string/confirm"
             android:textColor="@color/ink_950"
             android:textStyle="bold" />
     </LinearLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_main"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="28dp"
+        android:paddingTop="42dp"
+        android:paddingRight="28dp"
+        android:paddingBottom="34dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FLOATING SCREEN TRANSLATOR"
+            android:textColor="@color/aqua"
+            android:textSize="12sp"
+            android:letterSpacing="0.14" />
+
+        <TextView
+            android:id="@+id/language_setup_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Choose language · 选择语言 · 選擇語言 · Выберите язык"
+            android:textColor="@color/paper"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/language_setup_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Choose your interface language"
+            android:textColor="@color/paper_muted"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp" />
+
+        <LinearLayout
+            android:id="@+id/language_zh_cn"
+            style="@style/LanguageChoiceCard">
+
+            <TextView
+                style="@style/LanguageChoiceFlag"
+                android:text="🇨🇳" />
+
+            <TextView
+                style="@style/LanguageChoiceLabel"
+                android:text="中文" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/language_zh_tw"
+            style="@style/LanguageChoiceCard">
+
+            <TextView
+                style="@style/LanguageChoiceFlag"
+                android:text="🇭🇰" />
+
+            <TextView
+                style="@style/LanguageChoiceLabel"
+                android:text="繁體中文" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/language_en"
+            style="@style/LanguageChoiceCard">
+
+            <TextView
+                style="@style/LanguageChoiceFlag"
+                android:text="🇺🇸" />
+
+            <TextView
+                style="@style/LanguageChoiceLabel"
+                android:text="English" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/language_ru"
+            style="@style/LanguageChoiceCard">
+
+            <TextView
+                style="@style/LanguageChoiceFlag"
+                android:text="🇷🇺" />
+
+            <TextView
+                style="@style/LanguageChoiceLabel"
+                android:text="Русский" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

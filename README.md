@@ -1,4 +1,4 @@
-# 浮屏译 / Floating Screen Translator / Плавающий переводчик экрана
+# 浮屏译 / Floating Screen Translator
 
 **本项目由 oen1day 与 OpenAI Codex（GPT-5）共同完成，免费开源。**
 **Created by oen1day with OpenAI Codex (GPT-5). Free and open source.**

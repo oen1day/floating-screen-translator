@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <view
+        android:id="@+id/selection_view"
+        class="io.github.oen1day.floatingtranslator.RegionPickerOverlay$SelectionView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/intro_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/panel_bg"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="框选翻译区域"
+            android:textColor="@color/paper"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:lineSpacingExtra="5dp"
+            android:text="1. 点击“开始框选”。\n2. 按住屏幕并拖动，画出矩形区域。\n3. 松开后可用双指捏合调整选区。\n4. 最后点击“确定”保存。"
+            android:textColor="@color/paper_muted"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="选区以外的画面会变暗；悬浮翻译面板会暂时隐藏，这是正常状态。"
+            android:textColor="@color/aqua"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel_region_button"
+                style="@style/OverlayButton"
+                android:layout_height="48dp"
+                android:text="取消" />
+
+            <Button
+                android:id="@+id/start_region_button"
+                style="@style/OverlayButton"
+                android:layout_height="48dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/button_primary"
+                android:text="开始框选"
+                android:textColor="@color/ink_950"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/selecting_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/panel_bg"
+        android:padding="12dp"
+        android:text="按住屏幕并拖动框选；松开后确认"
+        android:textColor="@color/paper"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/action_tray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="18dp"
+        android:background="@drawable/panel_bg"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/reselect_region_button"
+            style="@style/OverlayButton"
+            android:layout_height="46dp"
+            android:text="重选" />
+
+        <Button
+            android:id="@+id/cancel_region_action_button"
+            style="@style/OverlayButton"
+            android:layout_height="46dp"
+            android:layout_marginLeft="7dp"
+            android:text="取消" />
+
+        <Button
+            android:id="@+id/confirm_region_button"
+            style="@style/OverlayButton"
+            android:layout_height="46dp"
+            android:layout_marginLeft="7dp"
+            android:background="@drawable/button_primary"
+            android:text="确定"
+            android:textColor="@color/ink_950"
+            android:textStyle="bold" />
+    </LinearLayout>
+</FrameLayout>

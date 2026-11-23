@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ink_950">#061014</color>
+    <color name="ink_900">#0A171C</color>
+    <color name="ink_800">#12252C</color>
+    <color name="ink_700">#1C343D</color>
+    <color name="paper">#F4FAFB</color>
+    <color name="paper_muted">#B9CED3</color>
+    <color name="aqua">#53D7D9</color>
+    <color name="aqua_dark">#0E777F</color>
+    <color name="warning">#FFCB77</color>
+    <color name="danger">#FF7A90</color>
+</resources>

@@ -1,0 +1,68 @@
+name: Bug report
+description: Report a reproducible application problem
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Remove serial numbers, API keys, private screen text, and personal data
+        before posting logs or screenshots.
+  - type: input
+    id: app-version
+    attributes:
+      label: App version
+      placeholder: 1.11.3-speed
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and Android version
+      placeholder: OEM model, Android version
+    validations:
+      required: true
+  - type: dropdown
+    id: capture-mode
+    attributes:
+      label: Capture mode
+      options:
+        - MediaProjection
+        - Accessibility compatibility mode
+        - Not applicable
+    validations:
+      required: true
+  - type: dropdown
+    id: strength
+    attributes:
+      label: Translation strength
+      options:
+        - Fast
+        - Balanced
+        - Precise
+        - API
+        - 日→中
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Select ...
+        2. Tap ...
+        3. Rotate ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and redacted logs
+    validations:
+      required: true

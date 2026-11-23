@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/overlay_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/panel_bg"
+    android:minWidth="150dp"
+    android:minHeight="120dp">
+
+    <LinearLayout
+        android:id="@+id/panel_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="7dp">
+
+        <LinearLayout
+            android:id="@+id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="@drawable/title_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="浮屏译"
+                android:textColor="@color/paper"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/status_chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/chip_bg"
+                android:maxLines="1"
+                android:text="准备中"
+                android:textColor="@color/aqua"
+                android:textSize="11sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/close_button"
+                android:layout_width="34dp"
+                android:layout_height="32dp"
+                android:contentDescription="停止服务"
+                android:gravity="center"
+                android:text="×"
+                android:textColor="@color/paper_muted"
+                android:textSize="21sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/controls_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/source_language_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="34dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_secondary"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="4dp"
+                    android:spinnerMode="dropdown" />
+
+                <TextView
+                    android:layout_width="24dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="→"
+                    android:textColor="@color/aqua"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/target_language_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="34dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_secondary"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="4dp"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="强度"
+                    android:textColor="@color/paper"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <io.github.oen1day.floatingtranslator.StrengthSelectorView
+                    android:id="@+id/translation_strength_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="68dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="翻译"
+                    android:textColor="@color/paper"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <Switch
+                    android:id="@+id/translation_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="5dp"
+                    android:thumbTint="@color/aqua"
+                    android:trackTint="@color/aqua_dark" />
+
+                <TextView
+                    android:id="@+id/region_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="全屏"
+                    android:textColor="@color/paper_muted"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="透明度"
+                    android:textColor="@color/paper_muted"
+                    android:textSize="11sp" />
+
+                <SeekBar
+                    android:id="@+id/opacity_slider"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:max="65"
+                    android:maxHeight="3dp"
+                    android:minHeight="3dp"
+                    android:progressTint="@color/aqua"
+                    android:thumbTint="@color/aqua" />
+
+                <TextView
+                    android:id="@+id/opacity_value"
+                    android:layout_width="42dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="92%"
+                    android:textColor="@color/aqua"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/full_screen_button"
+                    style="@style/OverlayButton"
+                    android:text="全屏" />
+
+                <Button
+                    android:id="@+id/region_button"
+                    style="@style/OverlayButton"
+                    android:layout_marginLeft="7dp"
+                    android:text="框选区域" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/result_frame"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/result_bg"
+            android:padding="10dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="vertical">
+
+                <TextView
+                    android:id="@+id/result_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="打开翻译后，译文会显示在这里。\n拖动画布可移动窗口，右下角可缩放。"
+                    android:textColor="@color/paper"
+                    android:textIsSelectable="true"
+                    android:textSize="15sp"
+                    android:lineSpacingExtra="5dp" />
+            </ScrollView>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/collapse_button"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/chip_bg"
+        android:contentDescription="收起控制面板"
+        android:elevation="8dp"
+        android:padding="6dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_panel_collapse" />
+
+    <TextView
+        android:id="@+id/resize_handle"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/chip_bg"
+        android:contentDescription="拖动调整窗口大小"
+        android:elevation="9dp"
+        android:gravity="center"
+        android:text="◢"
+        android:textColor="@color/aqua"
+        android:textSize="20sp" />
+</FrameLayout>

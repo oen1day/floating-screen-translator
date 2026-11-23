@@ -1,0 +1,42 @@
+# Android / Gradle
+.gradle/
+.idea/
+local.properties
+**/build/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Signing and secrets
+*.jks
+*.keystore
+keystore.properties
+secrets.properties
+.env
+.env.*
+
+# Models and generated downloads
+*.gguf
+*.litertlm
+*.task
+*.sha256
+
+# Local and release artifacts
+*.apk
+*.aab
+*.aar
+outputs/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Logs and screenshots
+*.log
+*.png
+*.jpg
+*.jpeg
+*.webp
